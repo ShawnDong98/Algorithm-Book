@@ -56,7 +56,7 @@ Problems B:
 输出说明:在一行上输出马鞍点的行号、列号(行号和列号从0开始记数)及元素的值
 （用一个空格分隔）,之后换行；若不存在马鞍点,则输出一个字符串"no"后换行。
 
-输入示例:(注意:本题裁判机上偷入数据的第一有整数不一定是4和3）
+输入示例:(注意:本题裁判机上输入数据的第一行整数不一定是4和3）
 4 3
 11 13 121
 407 72 88
@@ -164,12 +164,12 @@ w1，w2,,,,wn,试根据该权值序列构成哈大蔓树,并计算该树的带权路径长度。
 -----------------------------------------------------------------*/
 struct Node{
     ll weight;
-    ll lchild, rchild, parent;
+    ll lchild, rchild, parent, length;
 };
 
 class SolutionD{
 public:
-     void Huffman_Tree_Structor(vector<Node> Tree){
+     void Huffman_Tree_Structor(vector<Node> &Tree){
         vector<Node> A = Tree;
         Node T;
 //        ll min = find_min(A);
@@ -180,12 +180,32 @@ public:
             ll min = find_min(A);
             ll second_min = find_min(A);
             T.weight = Tree[min].weight + Tree[second_min].weight;
+            T.parent = -1;
             T.lchild = min;
             T.rchild = second_min;
             A.push_back(T);
             Tree.push_back(T);
+            Tree[min].parent = Tree.size()-1;
+            Tree[second_min].parent = Tree.size()-1;
         }
         printTree(Tree);
+        printTree_parent(Tree);
+
+    }
+    void Huffman_Weight_Length(vector<Node> &Tree, ll n){
+        for(int i=0; i<n; ++i){
+            Node T = Tree[i];
+            while(T.parent!=-1){
+                T = Tree[T.parent];
+                Tree[i].length++;
+
+            }
+        }
+        ll sum_weight_length = 0;
+        for(int i=0; i<n; i++){
+            sum_weight_length += Tree[i].length * Tree[i].weight;
+        }
+        cout << "weight_length: " << sum_weight_length << endl;
 
     }
     vector<Node> Init_Huffman_Tree(vector<ll> A){
@@ -194,6 +214,7 @@ public:
         for(int i=0; i<A.size(); ++i){
             T.weight = A[i];
             T.parent = -1;
+            T.length = 0;
             Tree.push_back(T);
         }
         return Tree;
@@ -219,6 +240,12 @@ public:
     void printTree(vector<Node> Tree){
         for(int i=0; i<Tree.size(); ++i){
             cout << Tree[i].weight << " ";
+        }
+        cout << endl;
+    }
+    void printTree_parent(vector<Node> Tree){
+        for(int i=0; i<Tree.size(); ++i){
+            cout << Tree[i].parent << " ";
         }
         cout << endl;
     }
@@ -271,5 +298,6 @@ int main(){
     Tree = S.Init_Huffman_Tree(A);
     S.printTree(Tree);
     S.Huffman_Tree_Structor(Tree);
+    S.Huffman_Weight_Length(Tree, n);
     return 0;
 }
