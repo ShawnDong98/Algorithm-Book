@@ -373,9 +373,6 @@ public:
     }
 };
 
-bool compare(Info a, Info b){
-    return a.subjects > b.subjects;
-}
 
 int main(){
 //    SolutionA S;
@@ -388,8 +385,6 @@ int main(){
 //    S.ProblemsC();
 
     SolutionD S;
-//    string str = "12";
     S.Information_Sort();
-//    S.str2num(str);
     return 0;
 }
