@@ -61,6 +61,6 @@ int main(){
     Solution S;
     S.Problem();
 
-    system("pause");
+    //system("pause");
     return 0;
 }   
