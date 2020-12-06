@@ -26,6 +26,7 @@ public:
     }
 };
  
+ 
 int main(){
     // string s = "G()(al)";
     // string s = "G()()()()(al)";
