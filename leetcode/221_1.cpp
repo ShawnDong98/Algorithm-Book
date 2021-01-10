@@ -27,6 +27,25 @@ public:
     }
 
 };
+
+
+class Solution_ {
+public:
+    int count(string s) {
+        int ret = 0;
+        set<char> S({'a', 'e', 'i', 'o', 'i'});
+        for (auto c: s) {
+            auto x = tolower(c);
+            if (S.count(x)) ret++;
+        }
+        return ret;
+    }
+
+    bool halvesAreAlike(string s) {
+        int n = s.size() / 2;
+        return count(s.substr(0, n)) == count(s.substr(n));
+    }
+}
  
 int main(){
     // string s = "Book";
@@ -34,7 +53,7 @@ int main(){
     // string s = "MerryChristmas";
     string s = "AbCdEfGh";
 
-    Solution S;
+    Solution_ S;
 
 
     cout << S.halvesAreAlike(s) << endl;
