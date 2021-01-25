@@ -31,23 +31,25 @@ public:
         return rectangle[0]<rectangle[1] ? rectangle[0] : rectangle[1];
     }
 };
+
+class Solution_ {
+public:
+    int countGoodRectangles(vector<vector<int>>& r) {
+        int maxlen = 0;
+        for (auto& t: r) maxlen = max(min(t[0], t[1]), maxlen);
+        int res = 0;
+        for (auto& t: r){
+            if (t[0] >= maxlen && t[1] >= maxlen) res ++;
+        }
+        return res;
+    }
+};
  
 int main() {
-    // vector<int> R1 = {5, 8};
-    // vector<int> R2 = {3, 9};
-    // vector<int> R3 = {5, 12};
-    // vector<int> R4 = {16, 5};
-    // vector<vector<int>> rectangles;
-
-    // rectangles.push_back(R1);
-    // rectangles.push_back(R2);
-    // rectangles.push_back(R3);
-    // rectangles.push_back(R4);
-
-    vector<int> R1 = {2, 3};
-    vector<int> R2 = {3, 7};
-    vector<int> R3 = {4, 3};
-    vector<int> R4 = {3, 7};
+    vector<int> R1 = {5, 8};
+    vector<int> R2 = {3, 9};
+    vector<int> R3 = {5, 12};
+    vector<int> R4 = {16, 5};
     vector<vector<int>> rectangles;
 
     rectangles.push_back(R1);
@@ -55,9 +57,20 @@ int main() {
     rectangles.push_back(R3);
     rectangles.push_back(R4);
 
-    Solution S;
+    // vector<int> R1 = {2, 3};
+    // vector<int> R2 = {3, 7};
+    // vector<int> R3 = {4, 3};
+    // vector<int> R4 = {3, 7};
+    // vector<vector<int>> rectangles;
 
-    S.countGoodRectangles(rectangles);
+    // rectangles.push_back(R1);
+    // rectangles.push_back(R2);
+    // rectangles.push_back(R3);
+    // rectangles.push_back(R4);
+
+    Solution_ S;
+
+    cout << S.countGoodRectangles(rectangles) << endl;
     
 
     return 0;
