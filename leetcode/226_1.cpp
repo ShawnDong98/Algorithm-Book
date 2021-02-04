@@ -32,13 +32,28 @@ public:
     }
 
 };
+
+class Solution_ {
+public:
+    int countBalls(int l, int h) {
+        vector<int> sum(50);
+        int res = 0;
+        for (int i=l; i <= h; i ++) {
+            int x = i, s = 0;
+            while (x) s += x % 10, x /= 10;
+            sum[s] ++;
+            res = max(res, sum[s]);
+        }
+        return res;
+    }
+};
  
 int main() {
     // int lowLimit = 1, highLimit = 10;
 
     int lowLimit = 5, highLimit = 15;
 
-    Solution S;
+    Solution_ S;
 
     cout << S.countBalls(lowLimit, highLimit) << endl;
     return 0;
