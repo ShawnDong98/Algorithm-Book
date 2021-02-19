@@ -38,21 +38,34 @@ public:
     }
 
 };
+
+
+class Solution_ {
+public:
+    int maximumScore(int a, int b, int c) {
+        int d[] = {a, b, c};
+        sort(d, d + 3);
+        int x = 0;
+        if (d[0] + d[1] < d[2]) x = d[2] - (d[0] + d[1]);
+        else x = (a + b + c) % 2;
+        return (a + b + c - x) / 2;
+    }
+};
  
 int main() {
-    // int a = 2;
-    // int b = 4;
-    // int c = 6;
+    int a = 2;
+    int b = 4;
+    int c = 6;
 
     // int a = 4;
     // int b = 4;
     // int c = 6;
 
-    int a = 1;
-    int b = 8;
-    int c = 8;
+    // int a = 1;
+    // int b = 8;
+    // int c = 8;
 
-    Solution S;
+    Solution_ S;
 
     cout << S.maximumScore(a, b, c) << endl;
     
