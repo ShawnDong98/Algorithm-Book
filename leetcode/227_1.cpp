@@ -23,13 +23,30 @@ public:
 
     }
 };
+
+class Solution_ {
+public:
+    bool check(vector<int>& a) {
+        auto b = a;
+        sort(b.begin(), b.end());
+        int n = a.size();
+        for (int i = 0; i < n; i ++) {
+            if (a == b) return true;
+            int t = a[0];
+            for (int j = 1; j < n; j ++)
+                a[j - 1] = a[j];
+            a.back() = t;
+        }
+        return false;
+    }
+};
  
 int main() {
-    // vector<int> nums = {2, 1, 3, 4};
+    vector<int> nums = {2, 1, 3, 4};
     // vector<int> nums = {3, 4, 5, 1, 2};
     // vector<int> nums = {1, 1, 1};
-    vector<int> nums = {2, 1};
-    Solution S;
+    // vector<int> nums = {2, 1};
+    Solution_ S;
 
     cout << S.check(nums) << endl;
     return 0;
