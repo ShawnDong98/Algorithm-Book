@@ -1,13 +1,32 @@
-
 class Solution:
-    """
-    状态：
-    dp[i]: 若前 i 个字符可以解码， 表示前 i 个字符可以解码的方法数
+    def numDecodings_20211226(self, s: str) -> int:
+        """
+        状态表示：
+        - 集合： 所有前 i 个数字解码得到的字符串
+        - 属性： 数量
 
-    若前 i 个字符不能解码，那整个字符串肯定不能解码，我们无需再进行下去了，直接返回 0 即可
+        状态计算：
+        - 最后一个字母是一位数 f[i-1]
+        - 最后一个字母是两位数 f[i-2]
+        """
+        if not s: return 0
+        dp = [0] * (len(s) + 1)
+        dp[0] = 1
+        for i in range(1, len(s) + 1):
+            if s[i - 1] != '0':
+                dp[i] += dp[i - 1]
+            if i!=1 and s[i-2:i] > '09' and s[i-2:i] < '27':
+                dp[i] += dp[i - 2]
+        return dp[len(s)]
 
-    """
     def numDecodings(self, s: str) -> int:
+        """
+        状态：
+        dp[i]: 若前 i 个字符可以解码， 表示前 i 个字符可以解码的方法数
+
+        若前 i 个字符不能解码，那整个字符串肯定不能解码，我们无需再进行下去了，直接返回 0 即可
+
+        """
         # 开头有 0 直接返回
         if s.startswith('0'):
             return 0
