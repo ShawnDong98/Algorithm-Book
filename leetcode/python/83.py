@@ -9,5 +9,4 @@ class Solution:
             while cur.next and cur.val == cur.next.val:
                 cur.next = cur.next.next
             cur = cur.next
-
         return dummy.next
