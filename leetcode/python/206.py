@@ -13,7 +13,5 @@ class Solution:
             b.next = a
             a = b
             b = c
-
         head.next = None
-
         return a
