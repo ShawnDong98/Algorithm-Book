@@ -17,5 +17,6 @@ class Solution:
             tail.next = nxt
             cur = nxt
             count += 1
+
         return dummy.next
 
