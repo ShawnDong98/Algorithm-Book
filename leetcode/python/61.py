@@ -11,15 +11,16 @@ class Solution:
         n = 0
         p = head
         while p:
-            p = p.next
             n += 1
+            p = p.next
         k %= n
+        if k == 0: return head
         first = head
         second = head
         while k:
             first = first.next
             k -= 1
-        while(first.next):
+        while first.next:
             first = first.next
             second = second.next
         first.next = head
