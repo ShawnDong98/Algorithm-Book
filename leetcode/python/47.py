@@ -4,13 +4,33 @@ from itertools import combinations, permutations
 
 
 class Solution:
-    """
-    1 1 1 2 2 3 3 3
+    def permuteUnique_v20220123(self, nums: List[int]) -> List[List[int]]:
+        self.ans = []
+        self.path = [0] * len(nums)
+        self.st = [0] * len(nums)
+        nums = sorted(nums)
+        self.dfs(nums, 0)
+        return self.ans
+    def dfs(self, nums, u):
+        if u == len(nums):
+            self.ans.append(self.path.copy())
+            return
+        for i in range(len(nums)):
+            if not self.st[i]:
+                if (i and nums[i-1] == nums[i] and not self.st[i-1]):
+                    continue
+                self.st[i] = True
+                self.path[u] = nums[i]
+                self.dfs(nums, u+1)
+                self.st[i] = False
 
-    人为规定顺序
-    """
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        def dfs(nums, size, depth, path, used, res):
+        """
+        1 1 1 2 2 3 3 3
+
+        人为规定顺序
+        """
+       def dfs(nums, size, depth, path, used, res):
             if depth == size:
                 res.append(path.copy())
                 return
