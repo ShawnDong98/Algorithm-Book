@@ -1,6 +1,18 @@
 from typing import List
 from itertools import combinations
 class Solution:
+    def subsets_v20220124(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        n = len(nums)
+        i = 0
+        while i < 1 << n:
+            path = []
+            for j in range(n):
+                if i >> j & 1:
+                    path.append(nums[j])
+            res.append(path)
+            i += 1
+        return res
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
         n = len(nums)
