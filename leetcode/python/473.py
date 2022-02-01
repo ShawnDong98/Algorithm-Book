@@ -1,7 +1,7 @@
 from typing import List
 
 class Solution:
-    def makesquare(self, nums: List[int]) -> bool:
+    def makesquare_v20220201(self, nums: List[int]) -> bool:
         def dfs(start, cur, length, cnt):
             if cnt == 3: return True
             if cur == length: return dfs(0, 0, length, cnt + 1)
