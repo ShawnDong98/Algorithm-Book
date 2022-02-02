@@ -50,5 +50,3 @@ for i in range(n):
         h[k] = x
         up(k)
         down(k)
-
-
