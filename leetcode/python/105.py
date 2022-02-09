@@ -1,4 +1,11 @@
 class Solution:
+    def buildTree_v20220209(self, preorder: List[int], inorder: List[int]) -> TreeNode:
+        if not inorder: return
+        idx = inorder.index(preorder.pop(0))
+        root = TreeNode(inorder[idx])
+        root.left = self.buildTree(preorder, inorder[0:idx])
+        root.right = self.buildTree(preorder, inorder[idx+1:])
+        return root
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         # 递归终止条件
         if not preorder or not inorder: return
