@@ -9,6 +9,7 @@ class Solution:
             m[key].append(st)
         return list(m.values())
 
+
 S = Solution()
 print(S.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
 
