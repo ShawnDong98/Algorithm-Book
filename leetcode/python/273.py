@@ -5,7 +5,30 @@ class Solution:
                    "Eighteen", "Nineteen"]
         self.tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty",\
  "Ninety"]
-        self.t = ["Thousand", "Million", "Billion"]
+        self.t = ["Thousand", "Million", "Billion", ""]
+    def numberToWords_v20220304(self, num: int) -> str:
+        def get(x):
+            res = ''
+            if x >= 100:
+                res += self.nt[x // 100] + " Hundred "
+                x %= 100
+            if x >= 20:
+                res += self.tens[x // 10] + ' '
+                x %= 10
+                if x: res += self.nt[x] + ' '
+            elif x:
+                res += self.nt[x] + ' '
+            return res
+        if not num: return 'Zero'
+        res = ''
+        i, j = 1000000000, 0
+        while i >= 1:
+            if num >= i:
+                res += get(num // i) + self.t[j] + ' '
+                num %= i
+            i //= 1000
+            j += 1
+        return res.strip()
     def numberToWords(self, num: int) -> str:
         def helper(num) -> List[str]:
             if num < 20:
