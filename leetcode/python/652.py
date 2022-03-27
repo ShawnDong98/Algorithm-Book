@@ -2,7 +2,7 @@ import collections
 from typing import List
 
 class Solution:
-    def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+    def findDuplicateSubtrees_v20220327(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
         def dfs(root):
             nonlocal cnt
             if not root: return 0
