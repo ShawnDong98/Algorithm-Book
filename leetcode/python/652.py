@@ -1,7 +1,34 @@
+import collections
 from typing import List
 
 class Solution:
     def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+        def dfs(root):
+            nonlocal cnt
+            if not root: return 0
+            left = dfs(root.left)
+            right = dfs(root.right)
+            key = str(root.val) + ' ' + str(left) + ' ' + str(right)
+            if key not in ids:
+                cnt += 1
+                ids[key] += cnt
+            id = ids[key]
+            hash[id] += 1
+            if hash[id] == 2:
+                ans.append(root)
+            return id
+
+        ids = collections.defaultdict(int)
+        cnt = 0
+        hash = collections.defaultdict(int)
+        ans = []
+
+        dfs(root)
+        return ans
+
+
+    def findDuplicateSubtrees(self, root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+        self.map[key] = -1
         hash = collections.defaultdict(int)
         count = collections.defaultdict(int)
         self.cnt = 0
