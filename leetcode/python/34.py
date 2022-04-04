@@ -1,6 +1,13 @@
+import bisect
 from typing import List
 
 class Solution:
+    def searchRange_v20220404(self, nums: List[int], target: int) -> List[int]:
+        lb = bisect.bisect_left(nums, target)
+        rb = bisect.bisect_right(nums, target) - 1
+        if not nums: return [-1, -1]
+        if (lb == len(nums) or nums[lb] != target): return [-1, -1]
+        return [lb, rb]
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         def left_bound(nums: List[int], target: int) -> List[int]:
             left, right = 0, len(nums)
