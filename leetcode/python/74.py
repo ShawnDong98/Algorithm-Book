@@ -1,6 +1,14 @@
+import bisect
 from typing import List
 
 class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix: return False
+        for row in matrix:
+            ret = bisect.bisect_left(row, target)
+            if ret < len(row) and row[ret] == target:
+                return True
+        return False
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
         if not matrix: return False
         def binary_search(nums, target):
