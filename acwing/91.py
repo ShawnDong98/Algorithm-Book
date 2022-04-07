@@ -17,4 +17,5 @@ for i in range(0, 1 << n):
                 if i >> k & 1:
                     f[i][j] = min(f[i][j], f[i-(1<<j)][k] + w[k][j])
 
+
 print(f[(1<<n)-1][n-1])
