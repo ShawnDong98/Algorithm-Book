@@ -1,6 +1,18 @@
 from typing import List
 class Solution:
     def trap(self, height: List[int]) -> int:
+        stk = []
+        res = 0
+        for i in range(len(height)):
+            last = 0
+            while len(stk) and height[stk[-1]] <= height[i]:
+                res += (height[stk[-1]] - last) * (i - stk[-1] - 1)
+                last = height[stk[-1]]
+                stk.pop()
+            if len(stk): res += (i - stk[-1] - 1) * (height[i] - last)
+            stk.append(i)
+        return res
+    def trap(self, height: List[int]) -> int:
         # 边界条件
         if not height: return 0
         n = len(height)
