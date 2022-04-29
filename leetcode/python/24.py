@@ -1,6 +1,5 @@
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        if not head: return None
         dummy = ListNode(0)
         dummy.next = head
         pre = dummy
