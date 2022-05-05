@@ -1,7 +1,7 @@
-def quick_search(arr, l, r, k):
-    if l >= r: return arr[l]
-    i = l - 1
-    j = r + 1
+def quick_search(arr, left, right, k):
+    if left >= right: return arr[left]
+    i = left - 1
+    j = right + 1
     x = arr[(i + j) // 2]
 
     while i < j:
@@ -14,12 +14,16 @@ def quick_search(arr, l, r, k):
         if i < j:
             arr[i], arr[j] = arr[j], arr[i]
 
-    if j - l + 1 >= k:
-        return quick_search(arr, l, j, k)
+    # 左侧总共有多少个数
+    sl = j - left + 1
+
+    # 如果k在左侧
+    if k <= sl:
+        return quick_search(arr, left, j, k)
+    # 如果k在右侧，那么要找的数是右侧的第 k - sl 小的数
     else:
-        return quick_search(arr, j + 1, r, k - (j - l + 1))
+        return quick_search(arr, j+1, right, k - sl)
 
 n, k = map(int, input().split())
 arr = list(map(int, input().split()))
-print(str(quick_search(arr, 0, n - 1, k)))
-
+print(str(quick_search(arr, 0, n-1, k)))
