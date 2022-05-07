@@ -1,41 +1,41 @@
-def merge_sort(arr, l, r, tmp):
-    if l >= r: return 0
-    mid = (l + r) // 2
-    res = merge_sort(arr, l, mid, tmp) + merge_sort(arr, mid + 1, r, tmp)
+def merge_sort(arr, left, right, tmp):
+    if left >= right: return 0
+    mid = left + right >> 1
+    res = merge_sort(arr, left, mid, tmp) + merge_sort(arr, mid + 1, right, tmp)
 
-    k = 0
-    i = l
+    i = left
     j = mid + 1
-    while i <= mid and j <= r:
-        if (arr[i] <= arr[j]): 
+    k = 0
+    while i <= mid and j <= right:
+        if arr[i] <= arr[j]:
             tmp[k] = arr[i]
-            k += 1
             i += 1
+            k += 1
         else:
+            # 对 a[j] 这个值, a[i] 之后的都是逆序对
             res += mid - i + 1
             tmp[k] = arr[j]
-            k += 1
             j += 1
+            k += 1
     while i <= mid:
         tmp[k] = arr[i]
-        k += 1
         i += 1
-    while j <= r:
-        tmp[k] = arr[j]
         k += 1
+    while j <= right:
+        tmp[k] = arr[j]
         j += 1
-    
-    i = l
+        k += 1
+
+    i = left
     j = 0
-    while i <= r:
+    while i <= right:
         arr[i] = tmp[j]
         i += 1
         j += 1
-    
-    return res
 
+    return res
 
 n = int(input())
 arr = list(map(int, input().split()))
 tmp = [0] * n
-print(merge_sort(arr, 0, n - 1, tmp))
+print(merge_sort(arr, 0, n-1, tmp))
