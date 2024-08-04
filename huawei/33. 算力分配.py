@@ -33,34 +33,22 @@
 1 2
 """
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-def func(A, B):
-    sum_A = sum(A)
-    sum_B = sum(B)
-    residual = abs(sum_A - sum_B) / 2
-    res = []
-    for i in A:
-        for j in B:
-            if abs(i - j) == residual:
-                res.append((i, j))
-
-    res = sorted(res, key=lambda x: x[0])
-    return res[0]
-
 L1, L2 = map(int, input().split())
+
 A = list(map(int, input().split()))
+
 B = list(map(int, input().split()))
 
-print(" ".join(map(str, func(A, B))))
+res = []
+
+sum_A = sum(A)
+sum_B = sum(B)
+
+for a in A:
+    for b in B:
+        if sum_A - a + b == sum_B - b + a:
+            res.append((a, b))
+
+res = sorted(res, key=lambda x: x[0])
+
+print(" ".join(map(str, res[0])))

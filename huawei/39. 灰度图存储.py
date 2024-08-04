@@ -47,38 +47,35 @@
 将压缩数据恢复后的灰阶矩阵第3行第5列的像案灰阶值是255。
 """
 
-def func(inp, row, col):
-    rows = inp[0]
-    cols = inp[1]
 
+
+def func(rows, cols, data):
+    current_col = 0
+    current_row = 0
     matrix = [[0] * cols for _ in range(rows)]
 
-    compressed_data = inp[2:]
-    index = 0
+    
+    i = 0
+    for i in range(0, len(data), 2):
+        pixel = data[i]
+        count = data[i+1]
 
-    current_row = 0
-    current_col = 0
-
-    while index < len(compressed_data):
-        value = compressed_data[index]
-        count = compressed_data[index + 1]
-        index += 2
-
-        for i in range(count):
-            matrix[current_row][current_col] = value
+        for j in range(count):
+            matrix[current_row][current_col] = pixel
             current_col += 1
             if current_col >= cols:
                 current_col = 0
                 current_row += 1
 
-    return matrix[row][col]
-
-
+    return matrix
 
 
 
 inp = list(map(int, input().split()))
+rows = inp[0]
+cols = inp[1]
+data = inp[2:]
 
-row, col = map(int, input().split())
-
-print(func(inp, row, col))
+row, col = list(map(int, input().split()))
+matrix = func(rows, cols, data)
+print(matrix[row][col])

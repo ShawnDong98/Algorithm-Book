@@ -30,54 +30,55 @@
 最终构造出的树如下, 高度为3.
 """
 
-from typing import Any
-
-
 class TreeNode:
     def __init__(self, value):
-        self.value = value
         self.left = None
         self.right = None
         self.mid = None
+        self.value = value
 
-def insert(root, value):
-    if not root:
-        return TreeNode(value)
-    elif root.value - 500 > value:
-        root.left = insert(root.left, value)
-    elif root.value + 500 < value:
-        root.right = insert(root.right, value)
-    else:
-        root.mid = insert(root.mid, value)
-    return root
-    
 def get_height(node):
     if not node:
         return 0
-    left_height = get_height(node.left)
-    right_height = get_height(node.right)
-    mid_height = get_height(node.mid)
+    
+    left = get_height(node.left)
+    right = get_height(node.right)
+    mid = get_height(node.mid)
 
-    return 1 + max(left_height, right_height, mid_height)
+    return 1 + max(left, right, mid)
 
-def construct_tree_and_get_height(values):
+
+def insert_node(root, value):
+    if not root:
+        return TreeNode(value)
+    elif value < (root.value - 500):
+        root.left = insert_node(root.left, value)
+    elif value > root.value + 500:
+        root.right = insert_node(root.right, value)
+    else:
+        root.mid = insert_node(root.mid, value)
+
+    return root
+
+
+def BuildTree(values):
     if not values:
-        return 0
+        return None
     
     root = TreeNode(values[0])
 
     for value in values[1:]:
-        insert(root, value)
+        insert_node(root, value)
 
-    return get_height(root)
+    return root
 
-
-
- 
 
 N = int(input())
 
-inp = list(map(int, input().split()))
+values = list(map(int, input().split()))
 
-print(construct_tree_and_get_height(inp))
+
+root = BuildTree(values)
+
+print(get_height(root))
 

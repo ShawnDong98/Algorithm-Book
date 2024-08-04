@@ -47,19 +47,18 @@ from collections import defaultdict
 
 N = int(input())
 
-level = defaultdict()
-
-for i in range(0, 11):
-    level[i] = defaultdict(int)
+levels = {i:defaultdict(int) for i in range(10)}
 
 for _ in range(N):
-    api = input().split("/")
-    for i, keyword in enumerate(api, start=0):
-        level[i][keyword] += 1
+    inp = input().split("/")
+    for i, api in enumerate(inp):
+        levels[i][api] += 1
 
-    
-query, keyword = input().split()
+L, query = input().split()
 
-print(level[int(query)][keyword])
+print(levels[int(L)][query])
+
+
+
 
 

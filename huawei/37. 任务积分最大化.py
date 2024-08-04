@@ -46,28 +46,29 @@
 第 3 个时间单位内, 无任务可处理。
 共获得 9 个积分
 """
-
-def func(T, tasks):
-    tasks.sort(key=lambda x: (-x[1], x[0]))
-
+def func(N, T, tasks):
+    tasks = sorted(tasks, key=lambda x: (-x[1], x[0]))
     total_score = 0
-    time_slot = [False] * (T + 1)
+    time_slots = [False] * (T+1)
 
     for sla, score in tasks:
-        for t in range(min(sla, T), 0, -1):
-            if not time_slot[t]:
-                time_slot[t] = True
+        for i in range(min(sla, T), 0, -1):
+            if not time_slots[i]:
+                time_slots[i] = True
                 total_score += score
                 break
 
     return total_score
 
-    
 
 N = int(input())
-T = int(input())
-tasks = []
-for _ in range(N):
-    tasks.append(list(map(int, input().split())))
 
-print(func(T, tasks))
+T = int(input())
+
+tasks = []
+for i in range(N):
+    SLA, V = list(map(int, input().split()))
+    tasks.append((SLA, V))
+
+
+print(func(N, T, tasks))

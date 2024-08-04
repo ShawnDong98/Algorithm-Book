@@ -69,7 +69,7 @@ App2 2 09:10 09:30
 App2
 
 说明:
-ApP1和App2的时段有冲突, App2优先级高,注册App2之后, App1自动注销, 因此输出App2
+App1和App2的时段有冲突, App2优先级高,注册App2之后, App1自动注销, 因此输出App2
 
 示例3
 输入:
@@ -82,30 +82,50 @@ App2 2 09:10 09:30
 NA
 """
 
-
-
-time_table = [None] * 24 * 60 
 N = int(input())
 
+Flag = [None] * (24 * 60)
+
+app_list = []
+
 for _ in range(N):
-    name, priority, start, end = input().split()
-    start = int(start[:2]) * 60 + int(start[-2:])
-    end = int(end[:2]) * 60 + int(end[-2:])
-    print(start)
-    print(end)
-    for i in range(start, end):
-        if time_table[i] is not None:
-            if priority > time_table[i][1]:
-                time_table[i] = (name, priority)
-        else:
-            time_table[i] = (name, priority)
-    
+    app, priority, start_time, end_time = list(input().split())
+    start_time = (int(start_time[:2]) * 60) + int(start_time[-2:])
+    end_time = (int(end_time[:2]) * 60) + int(end_time[-2:])
 
-time = input()
-time = int(time[:2]) * 60 + int(time[-2:])
-print(time)
+    app_list.append((app, int(priority), start_time, end_time))
 
-if time_table[time] is None:
-    print("NA")
+pop_index = []
+
+for i in range(len(app_list)-1):
+    for j in range(i+1, len(app_list)):
+        app1, priority1, start_time1, end_time1 = app_list[i]
+        app2, priority2, start_time2, end_time2 = app_list[j]
+
+        if (start_time1 < start_time2 < end_time1) or (start_time2 < start_time1 < end_time2):
+            if priority1 < priority2:
+                pop_index.append(i)
+            else:
+                pop_index.append(j)
+
+
+pop_index = set(pop_index)
+
+app_list = [app for i, app in enumerate(app_list) if i not in pop_index]
+
+
+for app in app_list:
+    app, priority, start_time, end_time = app
+    for i in range(start_time, end_time+1):
+        Flag[i] = (app, priority)
+
+
+
+current_time = input()
+current_time = (int(current_time[:2]) * 60) + int(current_time[-2:])
+
+
+if Flag[current_time]:
+    print(Flag[current_time][0])
 else:
-    print(time_table[time][0])
+    print("NA")
