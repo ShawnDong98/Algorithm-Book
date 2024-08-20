@@ -30,16 +30,16 @@
 
 n = int(input())
 
-
 res = []
-for m in range(2, n):
-    for a in range(1, n):
-        total = sum(a + i for i in range(m))
-        if total == n:
-            res.append([a+i for i in range(m)])
+for start in range(0, n-1):
+    for end in range(start+1, n):
+        if sum(range(start, end)) == n:
+            res.append(list(range(start, end)))
 
-if len(res) == 0:
-    print(n)
-else:
-    res = sorted(res, key=lambda x: len(x))
+res = sorted(res, key=lambda x: len(x))
+
+
+if res:
     print(f"{n}=" + "+".join(map(str, res[0])))
+else:
+    print(n)

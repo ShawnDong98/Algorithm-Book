@@ -19,3 +19,53 @@
 说明：
 根据输入, 生成哈夫曼树, 按照中序遍历返回。所有节点中, 左节点权值小于等于右节点权值之和。当左右节点权值相同时左子树高度小于右子树。结果如上图
 """
+
+import heapq
+
+class TreeNode:
+    def __init__(self, weight):
+        self.weight = weight
+        self.left = None
+        self.right = None
+
+    def __lt__(self, other):
+        # 定义节点的比较方法，首先比较权值，其次比较高度
+        if self.weight == other.weight:
+            return self.get_height() < other.get_height()
+        return self.weight < other.weight
+
+    def get_height(self):
+        if not self.left and not self.right:
+            return 1
+        left_height = self.left.get_height() if self.left else 0
+        right_height = self.right.get_height() if self.right else 0
+        return 1 + max(left_height, right_height)
+
+def huffman_tree(weights):
+    heap = [TreeNode(w) for w in weights]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+        merged = TreeNode(left.weight + right.weight)
+        merged.left = left
+        merged.right = right
+        heapq.heappush(heap, merged)
+
+    return heap[0]
+
+def inorder_traversal(root):
+    if not root:
+        return []
+    return inorder_traversal(root.left) + [root.weight] + inorder_traversal(root.right)
+
+def main():
+    n = int(input())
+    weights = list(map(int, input().split()))
+    root = huffman_tree(weights)
+    result = inorder_traversal(root)
+    print(" ".join(map(str, result)))
+
+if __name__ == "__main__":
+    main()

@@ -43,30 +43,29 @@ fangfang minmin xiaohua
 说明：
 排序科目不存在, 按总分排序, fangfang和minmin总分相同, 按姓名的字典顺序, fangfang排在前面
 """
-
 from collections import defaultdict
 
-n, m = map(int, input().split())
+n, m = list(map(int, input().split()))
 
 subjects = input().split()
-subjects = {subject:i  for i, subject in enumerate(subjects)}
+subjects2id = {s:i for i, s in enumerate(subjects)}
 
-scores = defaultdict(list)
-for i in range(n):
+
+res = defaultdict()
+
+for _ in range(n):
+
     inp = input().split()
-    subjects_socres = list(map(int, inp[1:]))
-    scores[inp[0]] = subjects_socres + [sum(subjects_socres)]
 
-sorted_subject = input()
-if sorted_subject in subjects:
-    index = subjects[sorted_subject]
+    name = inp[0]
+    scores = list(map(int, inp[1:]))
+    res[name] = scores + [sum(scores)]
+
+subject = input()
+
+if subject not in subjects2id:
+    res = sorted(res.items(), key=lambda x: -x[1][-1])
 else:
-    index = -1
+    res = sorted(res.items(), key=lambda x: (-x[1][subjects2id[subject]], x[0]))
 
-print(scores)
-
-scores = sorted(scores.items(), key=lambda x: (-x[1][index], x[0]))
-
-print(" ".join([name for name, score in scores]))
-    
-
+print(" ".join([r[0] for r in res]))

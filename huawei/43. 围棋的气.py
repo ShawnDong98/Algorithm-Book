@@ -40,72 +40,41 @@
 数数黑棋一共8口气, 数数白棋一共7口气。
 """
 
-# def func(board, stones):
-#     directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
-#     visited = set()
+def count_air(board, stones):
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    visited = set()
+
+    air = 0
+
+    for x, y in stones:
+         for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < 19 and 0 <= ny < 19 and board[nx][ny] == 0 and (nx, ny) not in visited:
+                air += 1
+                visited.add((nx, ny))
+
+    return air
 
 
-    
+board = [[0] * 19 for _ in range(19)]
 
-#     def dfs(x, y):
-#         if (x, y) in visited:
-#             return 0
-        
-#         visited.add((x, y))
-#         liberities = 0
-#         stack = [(x, y)]
-#         while stack:
-#             cx, cy = stack.pop()
-#             for dx, dy in directions:
-#                 nx, ny = cx + dx, cy + dy
-#                 if 0 <= nx <= 19 and 0 <= ny <= 19:
-#                     if board[nx][ny] == None:
-#                         liberities += 1
-#                     elif board[nx][ny] == board[x][y] and 
+black_coords = list(map(int, input().split()))
 
-def calculate_airs(board, stones):
-    black_airs = 0
-    white_airs = 0
-    
-    for row, col in stones:
-        if board[row][col] == 'B':
-            black_airs += check_airs(row, col, board)
-        elif board[row][col] == 'W':
-            white_airs += check_airs(row, col, board)
-    
-    return black_airs, white_airs
+black_stones = []
 
-def check_airs(row, col, board):
-    airs = 0
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # 上下左右
-    for dr, dc in directions:
-        new_row, new_col = row + dr, col + dc
-        if 0 <= new_row < 19 and 0 <= new_col < 19 and board[new_row][new_col] == '.':
-            airs += 1
-    return airs
-        
-    
+white_coords = list(map(int, input().split()))
 
+white_stones = []
 
-blacks = list(map(int, input().split()))
+for i in range(0, len(black_coords), 2):
+    x, y = black_coords[i], black_coords[i+1]
+    board[x][y] = 1
+    black_stones.append((x, y))
 
-whites = list(map(int, input().split()))
+for i in range(0, len(white_coords), 2):
+    x, y = white_coords[i], white_coords[i+1]
+    board[x][y] = 2
+    white_stones.append((x, y))
 
-board = [['.'] * 19 for _ in range(19)]
-
-
-black_stones =  [(blacks[i], blacks[i+1]) for i in range(0, len(blacks) // 2, 2)]
-white_stones = [(whites[i], whites[i+1]) for i in range(0, len(whites) // 2, 2)]
-
-for i in range(0, len(blacks) // 2, 2):
-    board[blacks[i]][blacks[i+1]] = "B"
-
-for i in range(0, len(whites) // 2, 2):
-    board[whites[i]][whites[i+1]] = "W"
-
-black_liberties = calculate_airs(board, black_stones)
-white_liberties = calculate_airs(board, white_stones)
-print(black_liberties, white_liberties)
-
-for row in board:
-    print(row)
+print(count_air(board, black_stones))
+print(count_air(board, white_stones))

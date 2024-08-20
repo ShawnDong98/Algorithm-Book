@@ -19,19 +19,21 @@
 说明	无
 """
 
+
+cnt = 0
+
 inp = list(input())
 
 i = 0
-cnt = 0
-while i < len(inp):
-    left_empty = (i == 0) or inp[i-1] == "0"
-    right_empty = (i == len(inp) - 1) or inp[i+1] == "0"
 
+while i < len(inp):
+    left_empty = (i == 0) or (inp[i-1] == "0")
+    right_empty = (i == len(inp) - 1) or (inp[i+1] == "0")
+    
     if inp[i] == "0" and left_empty and right_empty:
         cnt += 1
         i += 1
-
-
+    
     i += 1
 
 print(cnt)

@@ -64,21 +64,15 @@ for i in range(n):
     gems.append(int(input()))
 
 
-value = int(input())
+res = []
+v = int(input())
+for start in range(0, len(gems)-1):
+    for end in range(start+1, len(gems)):
+        if sum(gems[start:end]) <= v:
+            res.append(gems[start:end])
 
-
-res = 0
-res_start = 0
-res_end = 0
-for start in range(n-1):
-    for end in range(start+1, n):
-        if sum(gems[start:end]) <= value:
-            if end-start > res:
-                res_start = start
-                res_end = end
-            res = max(res, end-start)
-            
-
-print(res)
-print(gems[res_start:res_end])
-
+if res:
+    res = sorted(res, key=lambda x: -len(x))
+    print(len(res[0]))
+else:
+    print(0)

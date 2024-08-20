@@ -70,19 +70,21 @@ leo: 29*5 + 27*6 + 36*6 + 43*1 + 178*2 = 922
 ava: 29*5 + 27*6 + 36*6 + 43*1 + 178*2 = 922
 根据热度值降序, 对于leo和ava, 热度值相等, 按照字典序, ava排在leo前面, 得到结果。
 """
-
+from collections import defaultdict
 N = int(input())
 
 Wwatch, Wstar, Wfork, Wissue, Wmr = list(map(int, input().split()))
 
-res = {}
-for _ in range(N):
+res = defaultdict(list)
+
+for i in range(N):
     inp = input().split()
     name = inp[0]
-    watch, star, fork, issue, mr = map(int, inp[1:])
-    res[name] = Wwatch * watch + Wstar * fork + Wfork * fork + Wissue * issue + Wmr * mr
+    nr_watch, nr_star, nr_fork, nr_issue, nr_mr = map(int, inp[1:])
+    res[name] = [Wwatch * nr_watch, Wstar * nr_star, Wfork * nr_fork, Wissue * nr_issue, Wmr * nr_mr]
 
-res = sorted(res.items(), key=lambda x: (-x[1], x[0]))
+res = sorted(res.items(), key=lambda x: -sum(x[1]))
 
 for r in res:
     print(r[0])
+

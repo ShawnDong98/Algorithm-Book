@@ -13,19 +13,65 @@
 样例输出 
 1
 """
+
 from itertools import permutations
 
-inps = list(map(int, input().split()))
+
+scores = list(map(int, input().split()))
+
+min_error = float("inf")
+for scores_ in permutations(scores, 10):
+    team1 = scores_[:5]
+    team2 = scores_[5:]
+
+    if abs(sum(team1) - sum(team2)) < min_error:
+        min_error = abs(sum(team1) - sum(team2)) 
+
+print(min_error)
 
 
-res = 100001
-for inp in permutations(inps):
-    seq1 = inp[:5]
-    seq2 = inp[5:]
 
-    if abs(sum(seq1) - sum(seq2)) < res:
-        res = min(res, abs(sum(seq1) - sum(seq2)))
 
-print(res)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from itertools import permutations
+
+# inps = list(map(int, input().split()))
+
+
+# res = 100001
+# for inp in permutations(inps):
+#     seq1 = inp[:5]
+#     seq2 = inp[5:]
+
+#     if abs(sum(seq1) - sum(seq2)) < res:
+#         res = min(res, abs(sum(seq1) - sum(seq2)))
+
+# print(res)
 
 

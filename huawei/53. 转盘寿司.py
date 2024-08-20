@@ -45,25 +45,46 @@
 18 13 5 22
 """
 
-def calculate_discounted_prices(prices):
-    n = len(prices)
-    result = [0] * n
-
-    for i in range(n):
-        j = 1
-        result[i] = prices[i]
-        while j <= n:
-            idx = (i + j) % n
-            if prices[idx] < prices[i]:
-                result[i] += prices[idx]
-                break
-
-            j += 1
-
-    return result
-
 prices = list(map(int, input().split()))
 
-res = calculate_discounted_prices(prices)
+prices_ = prices + prices
 
-print(" ".join(map(str, res)))
+n = len(prices)
+
+for i in range(len(prices)):
+    for j in range(i, i + n):
+        if prices_[j] < prices_[i]:
+            prices[i] += prices_[j]
+            break
+
+print(prices)
+
+
+
+
+
+
+
+
+# def calculate_discounted_prices(prices):
+#     n = len(prices)
+#     result = [0] * n
+
+#     for i in range(n):
+#         j = 1
+#         result[i] = prices[i]
+#         while j <= n:
+#             idx = (i + j) % n
+#             if prices[idx] < prices[i]:
+#                 result[i] += prices[idx]
+#                 break
+
+#             j += 1
+
+#     return result
+
+# prices = list(map(int, input().split()))
+
+# res = calculate_discounted_prices(prices)
+
+# print(" ".join(map(str, res)))

@@ -44,8 +44,8 @@ MU1087,CA9908,3U0045,FM1703
 3U0045,CA9908,FM1703,MU1087
 """
 
-airline = input().split(",")
+inp = input().split(",")
 
-airline = sorted(airline, key=lambda x: (x[:2], x[2:]))
+inp = sorted(inp, key=lambda x: (x[:2], int(x[2:])))
 
-print(",".join(airline))
+print(",".join(inp))

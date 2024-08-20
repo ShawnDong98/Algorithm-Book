@@ -26,21 +26,22 @@ XXYYXY
 分割后的子串，是原字符串的连续子串。
 """
 
-def max_balanced_substrings(s):
+def func(inp):
     count_X = 0
     count_Y = 0
-    balanced_count = 0
+    count_balance = 0
 
-    for char in s:
-        if char == "X":
+    for s in inp:
+        if s == "X":
             count_X += 1
-        elif char == "Y":
+        elif s == "Y":
             count_Y += 1
         
         if count_X == count_Y:
-            balanced_count += 1
+            count_balance += 1
 
-    return balanced_count
+    return count_balance
+
 
 inp = input()
-print(max_balanced_substrings(inp))
+print(func(inp))

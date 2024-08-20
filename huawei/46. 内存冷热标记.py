@@ -57,22 +57,21 @@
 
 from collections import Counter
 
-def func(visit_memory_seq, T):
-    res = Counter(visit_memory_seq)
-    res = [k for k, v in res.items() if v >= T]
-
-    return res
-
 N = int(input())
 
 visit_memory_seq = list(map(int, input().split()))
 
 T = int(input())
 
-res = func(visit_memory_seq, T)
+cnt = Counter(visit_memory_seq)
 
-if len(res) == 0:
-    print(0)
+res = {k : v for k, v in cnt.items() if v >= T}
+res = sorted(res.items(), key=lambda x: (-x[1], x[0]))
+
+if res:
+    print(len(res))
+    for r in res:
+        print(r[0])
 else:
-    print("\n".join(map(str, res)))
+    print(0)
 

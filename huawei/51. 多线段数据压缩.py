@@ -39,6 +39,7 @@
 输出的坐标相对顺序不能变化。
 """
 
+
 def simplify_coordinates(points):
 
     simplified_points = [points[0]]

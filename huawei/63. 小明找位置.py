@@ -23,11 +23,13 @@
 
 import bisect
 
-
 queue = list(map(int, input().split()))
 
-num = int(input())
+ming = int(input())
 
-res = bisect.bisect(queue, num)
+n = bisect.bisect(queue, ming)
 
-print(res)
+print(n+1)
+
+
+

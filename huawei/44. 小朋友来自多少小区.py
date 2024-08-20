@@ -39,12 +39,16 @@ garden = [2, 2, 3]
 from collections import Counter
 import math
 
-garden = list(map(int, input().split()))
+inp = list(map(int, input().split()))
 
-cnt = Counter(garden)
+cnt = Counter(inp)
 
 res = 0
 for k, v in cnt.items():
+    """
+    k 是一个小区除自己外小朋友的数量， 该小区有 k + 1 个小朋友
+    v 有这么多小朋友说自己小区还有 k 个 小朋友
+    """
     res += math.ceil(v / (k+1)) * (k+1)
 
 print(res)

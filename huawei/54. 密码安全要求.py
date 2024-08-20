@@ -26,41 +26,43 @@ ABC<c89%000<
 ABC89%00,true
 说明： 多余的C和0由于退格被去除, 最终用户输入的密码为ABc89%00, 且满足密码安全要求, 输出true
 """
-
-def valid_secret(passwd):
-    if len(passwd) < 8:
-        return "false"
-
+def valid_secret(secret):
+    if len(secret) < 8:
+        return False
+    
     flag_upper_alphabet = False
     flag_lower_alphabet = False
     flag_digit = False
     flag_others = False
 
-    for s in passwd:
-        if s.isdigit():
-            flag_digit = True
-        elif s.isalpha():
-            if s.islower():
-                flag_lower_alphabet = True
-            elif s.isupper():
+    for s in secret:
+        if s.isalpha():
+            if s.isupper():
                 flag_upper_alphabet = True
-        elif s != "\n" and s != "\r":
+            elif s.islower():
+                flag_lower_alphabet = True
+        elif s.isdigit():
+            flag_digit = True
+        elif s != " ":
             flag_others = True
 
-    if flag_upper_alphabet & flag_lower_alphabet & flag_digit & flag_others:
-        return "true"
-    else:
-        return "false"
+    return flag_lower_alphabet & flag_upper_alphabet & flag_digit & flag_others
 
 
 inp = input()
 
-passwd = []
-for s in inp:
-    if s == '<':
-        if passwd:
-            passwd.pop()
-    else:
-        passwd.append(s)
+secret = []
 
-print("".join(passwd) + "," + valid_secret(passwd))
+for s in inp:
+    if s == "<":
+        if len(secret):
+            secret.pop(-1)
+    else:
+        secret.append(s)
+
+secret = "".join(secret)
+
+if valid_secret(secret):
+    print(secret + "," + "true")
+else:
+    print(secret + "," + "false")

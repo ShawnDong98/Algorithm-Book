@@ -41,16 +41,43 @@
 至此, 披萨瓜分完毕, “吃货”拿到的披萨总大小为10+7+2=19。
 """
 
-def max_pizza_sum(N, slices):
-    def simulate(start):
-        eater = [0, 0]
-        taken = [False] * N
-        
-        turn = 0
-        index = start
+def func(slices):
+    max_pizza = max(slices)
+    index_max = slices.index(max_pizza)
+
+    total_sum = max_pizza
+    a = index_max - 1
+    b = index_max + 1
+    turn = 1
+
+    while True:
+        piece_size = 0
+        if a < 0:
+            a = len(slices) - 1
+        if b >= len(slices):
+            b = 0
+        if a == b:
+            total_sum += slices[a]
+            break
+        if slices[a] > slices[b]:
+            piece_size = slices[a]
+            a -= 1
+        else:
+            piece_size = slices[b]
+            b += 1
+        if turn % 2 == 0:
+            total_sum += piece_size
+
+        turn += 1
+
+    return total_sum 
 
 
 N = int(input())
+
 slices = []
-for _ in range(N):
+
+for i in range(N):
     slices.append(int(input()))
+
+print(func(slices))

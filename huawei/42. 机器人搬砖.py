@@ -34,32 +34,24 @@
 import math
 
 def func(bricks):
-    if len(bricks) > 8:
-        return -1
-    
-    def can_finish_with_energy(K):
-        hours_needed = 0
+    def can_finish(K):
+        hours_need = 0
         for b in bricks:
-            hours_needed += math.ceil(b / K)
+            hours_need += math.ceil(b / K)
 
-        return hours_needed <= 8
+        return hours_need <= 8
     
-    left, right = 1, max(bricks)
+    min_k, max_k = min(bricks), max(bricks)
 
-    while left <= right:
-        mid = (left + right) // 2
-        if can_finish_with_energy(mid):
-            result = mid
-            right = mid - 1
-        else:
-            left = mid + 1
-
-    return result
-
-
-
+    res = []
+    for k in range(min_k, max_k+1):
+        if can_finish(k):
+            res.append(k)
+    if res:
+        return min(res)
+    else:
+        return -1
 
 
 bricks = list(map(int, input().split()))
-
 print(func(bricks))

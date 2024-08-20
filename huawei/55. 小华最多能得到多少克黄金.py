@@ -49,37 +49,34 @@ k的取值范围如下:
 
 如图每个单元格中的数位之和均不大于7, 都是符合要求的, 所以可以最多可获得20克黄金
 """
-
 from collections import deque
 
 def can_enter(x, y, k):
-    sum_x = sum([int(i) for i in str(x)])
-    sum_y = sum([int(j) for j in str(y)])
+    x_sum = sum([int(s) for s in str(x)])
+    y_sum = sum([int(s) for s in str(y)])
 
-    return sum_x + sum_y <= k
-        
-    
-def find_gold(m, n, k):
+    return x_sum + y_sum <= k
 
+
+def bfs(m, n, k):
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     queue = deque([(0, 0)])
     visited = set()
     visited.add((0, 0))
 
-    gold = 1
+    cnt = 1
+
     while queue:
         x, y = queue.popleft()
         for dx, dy in directions:
             nx, ny = x + dx, y + dy
-            if 0 <= nx <= n - 1 and 0 <= ny <= m - 1 and (nx, ny) not in visited and can_enter(nx, ny, k):
-                gold += 1
-                visited.add((nx, ny))
+            if 0 <= nx < m and 0 <= ny < n and (nx, ny) not in visited and can_enter(nx, ny, k):
+                cnt += 1
                 queue.append((nx, ny))
+                visited.add((nx, ny))
 
-    return gold
+    return cnt
 
+m, n, k = list(map(int, input().split()))
 
-m, n, k = map(int, input().split())
-print(find_gold(m, n, k))
-
-
+print(bfs(m, n, k))

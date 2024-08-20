@@ -19,31 +19,37 @@
 """
 
 class TreeNode:
-    def __init__(self, x):
-        self.val = x
+    def __init__(self, val):
+        self.val = val
         self.left = None
         self.right = None
 
-def construct_tree(nodes, index=0):
+def BuildTree(nodes, index):
     if index >= len(nodes) or nodes[index] == -1:
         return None
+    
     root = TreeNode(nodes[index])
-    root.left = construct_tree(nodes, 2 * index + 1)
-    root.right = construct_tree(nodes, 2 * index + 2)
+
+    root.left = BuildTree(nodes, 2 * index + 1)
+    root.right = BuildTree(nodes, 2 * index + 2)
+
     return root
 
-def max_time_to_spread(root):
+
+def max_depth(root):
     if not root:
         return 0
-    left_time = max_time_to_spread(root.left)
-    right_time = max_time_to_spread(root.right)
-    return root.val + max(left_time, right_time)
 
-def solve(input_list):
-    root = construct_tree(input_list)
-    # 根节点的值不需要计入传播时间，因为悄悄话是从根节点开始的
-    return max_time_to_spread(root) - root.val
+    val = root.val
 
-# 示例输入
-input_list = [0, 9, 20, -1, -1, 15, 7, -1, -1, -1, -1, 3, 2]
-print(solve(input_list))  # 输出 38
+    left = val + max_depth(root.left)
+    right = val + max_depth(root.right)
+
+    return max(left, right)
+
+
+nodes = list(map(int, input().split()))
+
+root = BuildTree(nodes, 0)
+
+print(max_depth(root))

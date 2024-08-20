@@ -62,24 +62,21 @@ welldoneapplec?
 N = int(input())
 
 words = []
-for _ in range(N):
-    word = input()
-    words.append(word)
+
+for i in range(N):
+    words.append(input())
 
 chars = input()
-
 magic = chars.count('?')
-res = 0
+
+cnt = 0
 for word in words:
-    cnt = 0
+    patience = 0
     for s in word:
         if s not in chars:
-            cnt += 1
-    if cnt > magic:
+            patience += 1
+    if patience > magic:
         break
-    else:
-        print(word)
-        res += 1
+    cnt += 1
 
-print(res)
-        
+print(cnt)

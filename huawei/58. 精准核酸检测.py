@@ -33,37 +33,40 @@
 编号为1、2号的人员为确诊病例1号与0号有接触, 0号与3号有接触, 2号54号有接触。所以, 需要做核酸检测的人是0号、3号、4号,总计3人要进行核酸检测。
 题解
 """
-
 from collections import deque
-def check(chains, ills):
+
+
+
+def func(chains, ills):
     queue = deque(ills)
     visited = set()
-    for ill in ills:
+    for ill in ills:  
         visited.add(ill)
 
-    cnt = 0   
+    cnt = 0
+
     while queue:
         ill = queue.popleft()
         chain = chains[ill]
-        for i in range(len(chain)):
-            if i not in visited:
-                queue.append(chain[i])
-                visited.add(i)
-                cnt += 1
+        for i in range(0, len(chain)):
+            if chain[i]:
+                if i not in visited:
+                    queue.append(i)
+                    visited.add(i)
+                    cnt += 1
+
 
     return cnt
 
 
 
-
 N = int(input())
 
-ills = list(map(int, input().split(",")))
+ills = list(map(int, input().split(","))) 
 
 chains = []
-
-for _ in range(N):
+for i in range(N):
     chains.append(list(map(int, input().split(","))))
 
 
-print(check(chains, ills))
+print(func(chains, ills))

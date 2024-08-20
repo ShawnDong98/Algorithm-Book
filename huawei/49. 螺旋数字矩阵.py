@@ -27,39 +27,36 @@
 *
 *
 """
-import math
 
-def generate_spiral_matrix(n, m):
-    cols =  math.ceil(n / m)
-    matrix = [[None] * cols for _ in range(m)]
-
+def func(matrix, n):
+    rows = len(matrix)
+    cols = len(matrix[0])
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    row = 0
+    col = 0
+    direction_idx = 0
 
-    direction_index = 0
+    for i in range(1, n+1):
+        matrix[row][col] = i
+        next_row, next_col = row + directions[direction_idx][0], col + directions[direction_idx][1]
 
-    row, col = 0, 0
-
-    for num in range(1, n + 1):
-        matrix[row][col] = num
-        next_row, next_col = row + directions[direction_index][0], col + directions[direction_index][1]
-
-        if not (0 <= next_row < m and 0 <= next_col < cols and matrix[next_row][next_col] is None):
-            direction_index = (direction_index + 1) % 4
-            next_row, next_col = row + directions[direction_index][0], col + directions[direction_index][1]
+        if not (0 <= next_row < rows and 0 <= next_col < cols and matrix[next_row][next_col] == "*"):
+            direction_idx += 1
+            next_row, next_col = row + directions[direction_idx][0], col + directions[direction_idx][1]
 
         row, col = next_row, next_col
 
-
-    for i in range(m):
-        for j in range(cols):
-            if matrix[i][j] is None:
-                matrix[i][j] = "*"
-    
-    for row in matrix:
-        print(" ".join(str(cell) for cell in row))
+    return matrix
 
 
 
+n, m = list(map(int, input().split()))
 
-n, m = map(int, input().split())
-generate_spiral_matrix(n, m)
+cols = n // m + 1
+
+matrix = [["*"] * cols for _ in range(m)]
+
+matrix = func(matrix, n)
+
+for row in matrix:
+    print(" ".join(map(str, row)))
